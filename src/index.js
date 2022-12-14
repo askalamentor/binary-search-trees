@@ -1,10 +1,4 @@
-class Node {
-  constructor(data = null, left = null, right = null) {
-    this.data = data;
-    this.left = left;
-    this.right = right;
-  }
-}
+import Node from './node';
 
 class Tree {
   constructor(array) {
