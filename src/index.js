@@ -4,7 +4,7 @@ class Tree {
   constructor(array) {
     // remove duplicates and sort array
     const arr = [...new Set(array)].sort((a, b) => a - b);
-    console.log(arr);
+
     // build binary search tree
     this.root = this.buildTree(arr);
   }
@@ -51,6 +51,44 @@ class Tree {
     }
   }
 
+  deleteNode(root, key) {
+    // base case: if the tree is empty
+    if (root === null) {
+      return 'Tree is empty';
+    }
+    // otherwise, recursively down the tree
+    if (key < root.data) {
+      root.left = this.deleteNode(root.left, key);
+      return root;
+    } else if (key > root.data) {
+      root.right = this.deleteNode(root.right, key);
+      return root;
+
+      // this is the node to be deleted
+    } else {
+      // node with only one child or no child
+      if (root.right === null && root.left === null) return null;
+      else if (root.left === null) return root.right;
+      else if (root.right === null) return root.left;
+      else {
+        // node with two children: Get the inorder
+        // successor (smallest in the right subtree)
+        root.data = this.minValue(root.right);
+        root.right = this.deleteNode(root.right, root.data);
+      }
+    }
+    return root;
+  }
+
+  minValue(root) {
+    let minv = root.data;
+    while (root.left != null) {
+      minv = root.left.data;
+      root = root.left;
+    }
+    return minv;
+  }
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node.right !== null) {
       this.prettyPrint(
@@ -67,12 +105,23 @@ class Tree {
 }
 
 let a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+console.log('This is the initial tree');
 a.prettyPrint();
 
+console.log('Insert 50');
 a.insert(50);
+a.prettyPrint();
+console.log('Insert 30');
 a.insert(30);
+a.prettyPrint();
+console.log('Insert 40');
 a.insert(40);
-a.insert(20);
+a.prettyPrint();
+console.log('Delete 4');
+a.deleteNode(a.root, 4);
+a.prettyPrint();
+console.log('Delete 23');
+a.deleteNode(a.root, 23);
 a.prettyPrint();
 
 //
