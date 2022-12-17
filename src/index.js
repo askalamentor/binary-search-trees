@@ -39,34 +39,24 @@ class Tree {
     }
   }
 
-  insert(value) {
-    if (this.root === null) {
-      this.root = new Node(value);
-      return;
+  insert(root = this.root, key) {
+    // if the tree is empty, return a new mode
+    if (root === null) {
+      root = new Node(key);
+      return root;
     }
 
-    let currentNode = this.root;
-
-    while (true) {
-      if (value < currentNode.data) {
-        // if the value smaller than root, add left side
-        if (currentNode.left === null) {
-          currentNode.left = new Node(value);
-          return;
-        }
-        currentNode = currentNode.left;
-      } else {
-        // if the value bigger than root, add right side
-        if (currentNode.right === null) {
-          currentNode.right = new Node(value);
-          return;
-        }
-        currentNode = currentNode.right;
-      }
+    // otherwise, recur down the tree
+    if (key < root.data) {
+      root.left = this.insert(root.left, key);
+    } else if (key > root.data) {
+      root.right = this.insert(root.right, key);
     }
+
+    return root;
   }
 
-  deleteNode(root, key) {
+  deleteNode(root = this.root, key) {
     // base case: if the tree is empty
     if (root === null) {
       return 'Tree is empty';
@@ -97,7 +87,7 @@ class Tree {
     return root;
   }
 
-  minValue(root) {
+  minValue(root = this.root) {
     let minv = root.data;
     while (root.left != null) {
       minv = root.left.data;
@@ -127,13 +117,13 @@ console.log('This is the initial tree');
 tree.prettyPrint();
 
 console.log('Insert 50');
-tree.insert(50);
+tree.insert(tree.root, 50);
 tree.prettyPrint();
 console.log('Insert 30');
-tree.insert(30);
+tree.insert(tree.root, 30);
 tree.prettyPrint();
 console.log('Insert 40');
-tree.insert(40);
+tree.insert(tree.root, 40);
 tree.prettyPrint();
 console.log('Delete 4');
 tree.deleteNode(tree.root, 4);
