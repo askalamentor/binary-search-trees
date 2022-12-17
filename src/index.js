@@ -39,7 +39,7 @@ class Tree {
     }
   }
 
-  insert(root = this.root, key) {
+  insert(root, key) {
     // if the tree is empty, return a new mode
     if (root === null) {
       root = new Node(key);
@@ -56,7 +56,7 @@ class Tree {
     return root;
   }
 
-  deleteNode(root = this.root, key) {
+  deleteNode(root, key) {
     // base case: if the tree is empty
     if (root === null) {
       return 'Tree is empty';
@@ -87,13 +87,41 @@ class Tree {
     return root;
   }
 
-  minValue(root = this.root) {
+  minValue(root) {
     let minv = root.data;
     while (root.left != null) {
       minv = root.left.data;
       root = root.left;
     }
     return minv;
+  }
+
+  printLevelOrder() {
+    let h = this.height(this.root);
+    let i;
+    for (i = 1; i <= h; i++) this.printCurrentLevel(this.root, i);
+  }
+
+  height(root) {
+    if (root == null) return 0;
+    else {
+      /* compute height of each subtree */
+      let lheight = this.height(root.left);
+      let rheight = this.height(root.right);
+
+      /* use the larger one */
+      if (lheight > rheight) return lheight + 1;
+      else return rheight + 1;
+    }
+  }
+
+  printCurrentLevel(root, level) {
+    if (root == null) return;
+    if (level == 1) console.log(`${root.data} `);
+    else if (level > 1) {
+      this.printCurrentLevel(root.left, level - 1);
+      this.printCurrentLevel(root.right, level - 1);
+    }
   }
 
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
@@ -111,7 +139,7 @@ class Tree {
   }
 }
 
-let tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+const tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
 console.log(tree.search(tree.root, 67));
 console.log('This is the initial tree');
 tree.prettyPrint();
@@ -134,3 +162,4 @@ tree.prettyPrint();
 console.log(tree.search(tree.root, 40));
 console.log(tree.search(tree.root, 23));
 console.log(tree.search(tree.root, 100));
+tree.printLevelOrder();
