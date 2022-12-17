@@ -24,6 +24,21 @@ class Tree {
     return root;
   }
 
+  search(root, key) {
+    // base cases: root is null or key is present at root
+    if (root === null) return 'Key is not available';
+    if (root.data === key) return `${root.data} is available`;
+
+    // key is greater than root's key
+    if (root.data < key) {
+      return this.search(root.right, key);
+    }
+    // key is smaller than root's key
+    else {
+      return this.search(root.left, key);
+    }
+  }
+
   insert(value) {
     if (this.root === null) {
       this.root = new Node(value);
@@ -74,6 +89,8 @@ class Tree {
         // node with two children: Get the inorder
         // successor (smallest in the right subtree)
         root.data = this.minValue(root.right);
+
+        // Delete the inorder successor
         root.right = this.deleteNode(root.right, root.data);
       }
     }
@@ -104,24 +121,26 @@ class Tree {
   }
 }
 
-let a = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+let tree = new Tree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]);
+console.log(tree.search(tree.root, 67));
 console.log('This is the initial tree');
-a.prettyPrint();
+tree.prettyPrint();
 
 console.log('Insert 50');
-a.insert(50);
-a.prettyPrint();
+tree.insert(50);
+tree.prettyPrint();
 console.log('Insert 30');
-a.insert(30);
-a.prettyPrint();
+tree.insert(30);
+tree.prettyPrint();
 console.log('Insert 40');
-a.insert(40);
-a.prettyPrint();
+tree.insert(40);
+tree.prettyPrint();
 console.log('Delete 4');
-a.deleteNode(a.root, 4);
-a.prettyPrint();
+tree.deleteNode(tree.root, 4);
+tree.prettyPrint();
 console.log('Delete 23');
-a.deleteNode(a.root, 23);
-a.prettyPrint();
-
-//
+tree.deleteNode(tree.root, 23);
+tree.prettyPrint();
+console.log(tree.search(tree.root, 40));
+console.log(tree.search(tree.root, 23));
+console.log(tree.search(tree.root, 100));
