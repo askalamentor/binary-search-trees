@@ -97,30 +97,22 @@ class Tree {
   }
 
   printLevelOrder() {
-    let h = this.height(this.root);
-    let i;
-    for (i = 1; i <= h; i++) this.printCurrentLevel(this.root, i);
-  }
+    let queue = [];
+    queue.push(this.root);
 
-  height(root) {
-    if (root == null) return 0;
-    else {
-      /* compute height of each subtree */
-      let lheight = this.height(root.left);
-      let rheight = this.height(root.right);
+    while (queue.length != 0) {
+      let tempNode = queue.shift();
+      console.log(tempNode);
 
-      /* use the larger one */
-      if (lheight > rheight) return lheight + 1;
-      else return rheight + 1;
-    }
-  }
+      // enqueue left child
+      if (tempNode.left != null) {
+        queue.push(tempNode.left);
+      }
 
-  printCurrentLevel(root, level) {
-    if (root == null) return;
-    if (level == 1) console.log(`${root.data} `);
-    else if (level > 1) {
-      this.printCurrentLevel(root.left, level - 1);
-      this.printCurrentLevel(root.right, level - 1);
+      // enqueue right child
+      if (tempNode.right != null) {
+        queue.push(tempNode.right);
+      }
     }
   }
 
