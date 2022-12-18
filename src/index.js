@@ -129,6 +129,19 @@ class Tree {
     this.printInorder(root.right);
   }
 
+  printPreorder(root) {
+    if (root) {
+      // first, print the data
+      console.log(root.data);
+
+      // then recur on left side
+      this.printPreorder(root.left);
+
+      // finally recur on right side
+      this.printPreorder(root.right);
+    }
+  }
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node.right !== null) {
       this.prettyPrint(
@@ -169,3 +182,4 @@ console.log(tree.search(tree.root, 23));
 console.log(tree.search(tree.root, 100));
 tree.printLevelOrder();
 tree.printInorder(tree.root);
+tree.printPreorder(tree.root);
