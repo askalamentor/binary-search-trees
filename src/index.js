@@ -155,17 +155,17 @@ class Tree {
     console.log(root.data);
   }
 
-  maxDepth(root) {
+  height(root) {
     if (root === null) {
       return 0;
     } else {
-      let lDepth = this.maxDepth(root.left);
-      let rDepth = this.maxDepth(root.right);
+      let lHeight = this.height(root.left);
+      let rHeight = this.height(root.right);
 
-      if (lDepth > rDepth) {
-        return lDepth + 1;
+      if (lHeight > rHeight) {
+        return lHeight + 1;
       } else {
-        return rDepth + 1;
+        return rHeight + 1;
       }
     }
   }
