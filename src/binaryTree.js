@@ -1,3 +1,5 @@
+import Node from './node';
+
 export default class Tree {
   constructor(array) {
     // remove duplicates and sort array
