@@ -2,24 +2,24 @@ import Node from './node';
 
 export default class Tree {
   constructor(array) {
-    // remove duplicates and sort array
-    const arr = [...new Set(array)].sort((a, b) => a - b);
+    // we must remove duplicates and sort array for creating sorted binary search tree
+    const sortedArray = [...new Set(array)].sort((a, b) => a - b);
 
-    // build binary search tree
-    this.root = this.buildTree(arr);
+    // build sorted binary search tree
+    this.root = this.buildTree(sortedArray);
   }
 
-  buildTree(arr) {
+  buildTree(array) {
     // base case
-    if (arr.length === 0) return null;
+    if (array.length === 0) return null;
 
     // get the middle element of the array and make it root
-    let middle = Math.floor(arr.length / 2);
-    const root = new Node(arr[middle]);
+    let middle = Math.floor(array.length / 2);
+    const root = new Node(array[middle]);
 
     // recursively build left and right subtrees
-    root.left = this.buildTree(arr.slice(0, middle));
-    root.right = this.buildTree(arr.slice(middle + 1));
+    root.left = this.buildTree(array.slice(0, middle));
+    root.right = this.buildTree(array.slice(middle + 1));
 
     return root;
   }
@@ -40,7 +40,7 @@ export default class Tree {
   }
 
   insert(root, key) {
-    // if the tree is empty, return a new mode
+    // base case: if the tree is empty, return a new node (insert new node to leaf)
     if (root === null) {
       root = new Node(key);
       return root;
@@ -58,9 +58,8 @@ export default class Tree {
 
   deleteNode(root, key) {
     // base case: if the tree is empty
-    if (root === null) {
-      return 'Tree is empty';
-    }
+    if (root === null) return 'Tree is empty';
+
     // otherwise, recursively down the tree
     if (key < root.data) {
       root.left = this.deleteNode(root.left, key);
@@ -89,6 +88,8 @@ export default class Tree {
 
   minValue(root) {
     let minv = root.data;
+
+    // recur down to end of left edge
     while (root.left != null) {
       minv = root.left.data;
       root = root.left;
@@ -97,6 +98,7 @@ export default class Tree {
   }
 
   printLevelOrder() {
+    // queue method
     let queue = [];
     queue.push(this.root);
 

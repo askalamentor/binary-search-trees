@@ -35,3 +35,4 @@ console.log(balance);
 tree.root = tree.rebalance(tree.root);
 console.log(tree);
 tree.prettyPrint(tree.root);
+console.log(tree.deleteNode(tree.root, 105));
