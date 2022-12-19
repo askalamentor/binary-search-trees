@@ -161,6 +161,26 @@ class Tree {
     return 1 + Math.max(this.height(root.left), this.height(root.right));
   }
 
+  isBalanced(root) {
+    // base condition
+    if (!root) return true;
+
+    // for left and right subtree height
+    let lh = this.height(root.left);
+    let rh = this.height(root.right);
+
+    // allowed values 1, -1, 0
+    if (
+      Math.abs(lh - rh) <= 1 &&
+      this.isBalanced(root.right) === true &&
+      this.isBalanced(root.left) === true
+    )
+      return true;
+
+    // tree is not height-balanced tree
+    return false;
+  }
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node.right !== null) {
       this.prettyPrint(
@@ -190,6 +210,9 @@ tree.prettyPrint();
 console.log('Insert 40');
 tree.insert(tree.root, 40);
 tree.prettyPrint();
+console.log('Insert 35');
+tree.insert(tree.root, 35);
+tree.prettyPrint();
 console.log('Delete 4');
 tree.deleteNode(tree.root, 4);
 tree.prettyPrint();
@@ -202,5 +225,7 @@ console.log(tree.search(tree.root, 100));
 //tree.printInorder(tree.root);
 //tree.printPreorder(tree.root);
 tree.printPostorder(tree.root);
-const height = tree.height(tree.root.right.left.left.left);
+const height = tree.height(tree.root);
 console.log(`Height is ${height}`);
+const balance = tree.isBalanced(tree.root);
+console.log(balance);
