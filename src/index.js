@@ -155,19 +155,10 @@ class Tree {
     console.log(root.data);
   }
 
+  // Height is defined as the number of edges in longest path from a given node to a leaf node
   height(root) {
-    if (root === null) {
-      return 0;
-    } else {
-      let lHeight = this.height(root.left);
-      let rHeight = this.height(root.right);
-
-      if (lHeight > rHeight) {
-        return lHeight + 1;
-      } else {
-        return rHeight + 1;
-      }
-    }
+    if (!root) return 0;
+    return 1 + Math.max(this.height(root.left), this.height(root.right));
   }
 
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
@@ -208,9 +199,8 @@ tree.prettyPrint();
 console.log(tree.search(tree.root, 40));
 console.log(tree.search(tree.root, 23));
 console.log(tree.search(tree.root, 100));
-tree.printLevelOrder();
 //tree.printInorder(tree.root);
 //tree.printPreorder(tree.root);
 tree.printPostorder(tree.root);
-const depth = tree.maxDepth(tree.root);
-console.log(depth);
+const height = tree.height(tree.root.right.left.left.left);
+console.log(`Height is ${height}`);
