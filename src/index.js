@@ -155,6 +155,21 @@ class Tree {
     console.log(root.data);
   }
 
+  maxDepth(root) {
+    if (root === null) {
+      return 0;
+    } else {
+      let lDepth = this.maxDepth(root.left);
+      let rDepth = this.maxDepth(root.right);
+
+      if (lDepth > rDepth) {
+        return lDepth + 1;
+      } else {
+        return rDepth + 1;
+      }
+    }
+  }
+
   prettyPrint(node = this.root, prefix = '', isLeft = true) {
     if (node.right !== null) {
       this.prettyPrint(
@@ -197,3 +212,5 @@ tree.printLevelOrder();
 //tree.printInorder(tree.root);
 //tree.printPreorder(tree.root);
 tree.printPostorder(tree.root);
+const depth = tree.maxDepth(tree.root);
+console.log(depth);
